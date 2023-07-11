@@ -1,0 +1,17 @@
+;
+; BIND pa.br
+;
+$TTL	604800
+@	IN	SOA	pa.br. root.pa.br. (
+			      1		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@	IN  MX 10 mail.pa.br.
+@	IN	NS	ns1.pa.br.
+
+ns1			A	10.25.1.36
+mail		A 	10.24.6.114
+www			CNAME	ns1
