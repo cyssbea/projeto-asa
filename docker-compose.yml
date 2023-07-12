@@ -32,7 +32,7 @@ services:
       context: .
       dockerfile: Dockerfile.proxy
     image: proxy
-    container_name: proxy
+    container_name: proxsy
     ports:
       - "8080:80"
     depends_on:
