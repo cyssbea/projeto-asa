@@ -4,7 +4,7 @@ services:
 
   webmail:
     build:
-      context: .
+      context: ./webmail
       dockerfile: Dockerfile
     image: webmail
     container_name: webmail
@@ -12,7 +12,7 @@ services:
       - asa-network
   portal:
     build:
-      context: .
+      context: ./portal
       dockerfile: Dockerfile
     image: portal
     container_name: portal
@@ -20,19 +20,28 @@ services:
       - asa-network
   intranet:
     build:
-      context: .
+      context: ./intranet
       dockerfile: Dockerfile
     image: intranet
     container_name: intranet
     networks:
       - asa-network
 
+  email:
+    build:
+      context: ./email
+      dockerfile: Dockerfile
+    image: email
+    container_name: email
+    networks:
+      - asa-network
+
   proxy:
     build:
-      context: .
+      context: ./proxy
       dockerfile: Dockerfile
     image: proxy
-    container_name: proxsy
+    container_name: proxy
     ports:
       - "8080:80"
     depends_on:
