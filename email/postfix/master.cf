@@ -29,6 +29,17 @@ submission inet n       -       -       -       -       smtpd
 #  -o smtpd_sasl_auth_enable=yes
 #  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
 #  -o milter_macro_daemon_name=ORIGINATING
+
+# SASL authentication with dovecot #
+  -o smtpd_tls_security_level=encrypt
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_sasl_type=dovecot
+  -o smtpd_sasl_path=private/auth
+  -o smtpd_sasl_security_options=noanonymous
+  -o smtpd_sasl_local_domain=$myhostname
+  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+  -o smtpd_recipient_restrictions=reject_non_fqdn_recipient,reject_unknown_recipient_domain,permit_sasl_authenticated,reject
+
 #628       inet  n       -       -       -       -       qmqpd
 pickup    fifo  n       -       -       60      1       pickup
 cleanup   unix  n       -       -       -       0       cleanup
@@ -56,55 +67,10 @@ lmtp      unix  -       -       -       -       -       lmtp
 anvil     unix  -       -       -       -       1       anvil
 scache    unix  -       -       -       -       1       scache
 #
-# ====================================================================
-# Interfaces to non-Postfix software. Be sure to examine the manual
-# pages of the non-Postfix software to find out what options it wants.
-#
-# Many of the following services use the Postfix pipe(8) delivery
-# agent.  See the pipe(8) man page for information about ${recipient}
-# and other message envelope options.
-# ====================================================================
-#
-# maildrop. See the Postfix MAILDROP_README file for details.
-# Also specify in main.cf: maildrop_destination_recipient_limit=1
-#
+
 maildrop  unix  -       n       n       -       -       pipe
   flags=DRhu user=vmail argv=/usr/bin/maildrop -d ${recipient}
-#
-# ====================================================================
-#
-# Recent Cyrus versions can use the existing "lmtp" master.cf entry.
-#
-# Specify in cyrus.conf:
-#   lmtp    cmd="lmtpd -a" listen="localhost:lmtp" proto=tcp4
-#
-# Specify in main.cf one or more of the following:
-#  mailbox_transport = lmtp:inet:localhost
-#  virtual_transport = lmtp:inet:localhost
-#
-# ====================================================================
-#
-# Cyrus 2.1.5 (Amos Gouaux)
-# Also specify in main.cf: cyrus_destination_recipient_limit=1
-#
-#cyrus     unix  -       n       n       -       -       pipe
-#  user=cyrus argv=/cyrus/bin/deliver -e -r ${sender} -m ${extension} ${user}
-#
-# ====================================================================
-# Old example of delivery via Cyrus.
-#
-#old-cyrus unix  -       n       n       -       -       pipe
-#  flags=R user=cyrus argv=/cyrus/bin/deliver -e -m ${extension} ${user}
-#
-# ====================================================================
-#
-# See the Postfix UUCP_README file for configuration details.
-#
-uucp      unix  -       n       n       -       -       pipe
-  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)
-#
-# Other external delivery methods.
-#
+
 ifmail    unix  -       n       n       -       -       pipe
   flags=F user=ftn argv=/usr/lib/ifmail/ifmail -r $nexthop ($recipient)
 bsmtp     unix  -       n       n       -       -       pipe

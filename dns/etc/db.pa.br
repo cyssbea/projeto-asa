@@ -12,6 +12,6 @@ $TTL	604800
 @	IN  MX 10 mail.pa.br.
 @	IN	NS	ns1.pa.br.
 
-ns1			A	10.25.1.36
+ns1			A	172.29.240.1
 mail		A 	10.24.6.114
 www			CNAME	ns1

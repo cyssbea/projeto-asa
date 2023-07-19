@@ -2,50 +2,50 @@
 version: '3'
 services:
 
-  web01:
+  webmail:
     build:
       context: .
-      dockerfile: Dockerfile.c01
-    image: web01
-    container_name: web01
+      dockerfile: Dockerfile
+    image: webmail
+    container_name: webmail
     networks:
       - asa-network
-  web02:
+  portal:
     build:
       context: .
-      dockerfile: Dockerfile.c02
-    image: web02
-    container_name: web02
+      dockerfile: Dockerfile
+    image: portal
+    container_name: portal
     networks:
       - asa-network
-  web03:
+  intranet:
     build:
       context: .
-      dockerfile: Dockerfile.c03
-    image: web03
-    container_name: web03
+      dockerfile: Dockerfile
+    image: intranet
+    container_name: intranet
     networks:
       - asa-network
 
   proxy:
     build:
       context: .
-      dockerfile: Dockerfile.proxy
+      dockerfile: Dockerfile
     image: proxy
     container_name: proxsy
     ports:
       - "8080:80"
     depends_on:
-      - web01
-      - web02
-      - web03
+      - webmail
+      - portal
+      - intranet
     networks:
       - asa-network
 
   dns:
     build:
       context: ./dns
-      dockerfile: Dockerfile.ds01
+      dockerfile: Dockerfile
     image: dns
     container_name: dns
     hostname: ns1.pa.br

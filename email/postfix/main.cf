@@ -45,4 +45,31 @@ recipient_delimiter = +
 inet_interfaces = all
 inet_protocols = all
 
-#SASL conf
+
+# ENABLE TLS #
+smtpd_use_tls = yes
+smtpd_tls_key_file = /opt/pmx6/postfix/etc/certs/MyCertKey.pem
+smtpd_tls_cert_file = /opt/pmx6/postfix/etc/certs/MyCert.pem
+smtpd_tls_CAfile = /opt/pmx6/postfix/etc/certs/CaCert.pem
+smtpd_tls_loglevel =  3
+smtpd_tls_received_header = yes
+smtpd_tls_session_cache_timeout = 3600s
+tls_random_source = dev:/dev/urandom
+# END TLS   #                                     
+                
+# SASL conf #
+
+conf.d/master.conf:
+autentication service {
+
+unix_listener /var/spool/postfix/private/auth {
+modo = 0660
+# Assuming Postf's default user and group
+usuário = postfix
+grupo = sufixo        
+}
+
+conf.d/auth.conf
+14 auth_mechanisms = login simples
+
+smtpd_sasl_auth_enable = yes
