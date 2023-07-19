@@ -75,5 +75,5 @@ networks:
     driver: bridge
 
 #Volumes
-db:
-  wordpress:
+#db:
+#wordpress:

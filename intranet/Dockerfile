@@ -1,9 +1,2 @@
-FROM ubuntu/bind9
-
-RUN 
-
-RUN 
-
-RUN 
-
-COPY 
+FROM nginx:latest
+COPY intranet.html /usr/share/nginx/html/index.html
