@@ -1,2 +1,2 @@
-FROM nginx:latest
-COPY intranet.html /usr/share/nginx/html/index.html
+FROM wordpress:latest
+COPY intranet.html /usr/share/wordpress/html/index.html

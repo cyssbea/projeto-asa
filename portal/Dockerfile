@@ -1,2 +1,2 @@
-FROM nginx:latest
-COPY portal.html /usr/share/nginx/html/index.html
+FROM wordpress:latest
+COPY portal.html /usr/share/wordpress/html/index.html
