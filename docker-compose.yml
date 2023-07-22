@@ -67,13 +67,18 @@ services:
       - ./dns/etc:/etc/bind
     networks:
       - asa-network
+  db:
+    image: mysql:latest
+    volumes:
+      - ./var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mysecretpassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
 
 
 #Docker Networks
 networks:
   asa-network:
     driver: bridge
-
-#Volumes
-#db:
-#wordpress:
