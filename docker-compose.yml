@@ -27,15 +27,6 @@ services:
     networks:
       - asa-network
 
-  email:
-    build:
-      context: ./email
-      dockerfile: Dockerfile
-    image: email
-    container_name: email
-    networks:
-      - asa-network
-
   proxy:
     build:
       context: ./proxy
@@ -69,13 +60,28 @@ services:
       - asa-network
   db:
     image: mysql:latest
-    volumes:
-      - ./var/lib/mysql
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: mysecretpassword
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - ./db:/var/lib/mysql
+ 
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      WORDPRESS_DB_HOST: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./wordpress:/var/www/html
+ 
 
 
 #Docker Networks
