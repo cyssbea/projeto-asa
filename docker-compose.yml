@@ -26,6 +26,14 @@ services:
     container_name: intranet
     networks:
       - asa-network
+  email:
+    build:
+      context: ./email
+      dockerfile: Dockerfile
+    image: email
+    container_name: email
+    networks:
+      - asa-network
 
   proxy:
     build:
