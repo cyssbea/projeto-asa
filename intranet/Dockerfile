@@ -1,3 +1,3 @@
-FROM wordpress:latest
-COPY wp-config.php /usr/share/wordpress/html/index.html
-COPY intranet.html /usr/share/wordpress/html/index.html
+FROM nginx:latest
+
+COPY intranet.html /usr/share/nginx/html/index.html
