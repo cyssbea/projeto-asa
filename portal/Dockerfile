@@ -1,2 +1,2 @@
 FROM wordpress:latest
-COPY ./html/* /usr/share/wordpress/html/
+COPY /html/portal.html /usr/share/wordpress/html/index.html
