@@ -1,0 +1,33 @@
+server {
+    listen 80;
+    server_name rainloop.lan;
+
+    rewrite        ^ https://$server_name$request_uri? permanent;
+    access_log /var/log/nginx/rainloop.lan.access.log;
+    error_log /var/log/nginx/rainloop.lan.error.log;
+    root /srv/www/rainloop/;
+
+    # serve static files
+    location ~ ^/(images|javascript|js|css|flash|media|static)/  {
+     root    /srv/www/rainloop/;
+     expires 30d;
+    }
+
+    location / {
+        index index.html index.htm index.php;
+                autoindex on;
+                autoindex_exact_size off;
+                autoindex_localtime on;
+ }
+
+ location ^~ /data {
+  deny all;
+}
+
+    location ~ \.php$ {
+        #fastcgi_pass 127.0.0.1:9000; (depending on your php-fpm socket configuration)
+        fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi.conf;
+    }
+ }

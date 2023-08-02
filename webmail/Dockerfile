@@ -1,13 +1,19 @@
-FROM debian:latest
+FROM nginx:latest
 
-#RUN apt-get update
-#RUN apt-get upgrade -y
+RUN apt-get update
+RUN apt-get upgrade -y
 
-#RUN apt-get squirrelmail-locales squirrelmail apache2 htop w3m
+#RUN apt-get install apache2
+#RUN wget http://repository.rainloop.net/v1/rainloop-latest.zip
 
-#RUN ln -s /etc/squirrelmail/apache.conf /etc/apache2/conf.d/squirrelmail.conf
-#COPY ./squirrelmail/config.php /etc/squirrelmail/config.php
-#COPY ./html/*   /etc/squirrelmail/index.html
+#RUN unzip rainloop-latest.zip -d  /srv/www/rainloop/
+#RUN sudo chmod -R 755 /srv/www/rainloop/
+#RUN sudo chown -R http:http /srv/www/rainloop/
+
+#COPY ./site/rainloop-ssl.conf     /etc/nginx/sites-available/
+#COPY ./site/rainloop.lan     /etc/nginx/sites-available/ 
+#COPY ./site/rainloop.conf    /etc/httpd/conf/sites-available/ 
+#COPY ./html/*   /etc/rainloop/index.html
 
 #RUN apt-get install -y openssh-server
 #RUN mkdir /var/run/sshd/
