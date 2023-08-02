@@ -1,5 +1,5 @@
 FROM nginx:latest
-COPY nginx.conf /etc/gninx/nginx.conf
+#COPY ./webmail/nginx.conf /etc/nginx/nginx.conf
 RUN apt-get update
 RUN apt-get upgrade -y
 

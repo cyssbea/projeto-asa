@@ -65,32 +65,6 @@ services:
       - ./dns/etc:/etc/bind
     networks:
       - asa-network
-  db:
-    image: mysql:latest
-    restart: always
-    environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
-      MYSQL_RANDOM_ROOT_PASSWORD: '1'
-    volumes:
-      - ./db:/var/lib/mysql
- 
-  wordpress:
-    image: wordpress
-    restart: always
-    ports:
-      - 443:443
-    environment:
-      WORDPRESS_DB_HOST: wordpress
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wordpress
-    volumes:
-      - ./wordpress:/var/www/html
- 
-
-
 #Docker Networks
 networks:
   asa-network:
