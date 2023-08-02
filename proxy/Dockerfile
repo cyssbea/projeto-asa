@@ -1,3 +1,4 @@
 FROM nginx:latest
-#COPY nginx.conf /etc/nginx/nginx.conf
-COPY default.conf /etc/nginx/conf.d/default.conf
+COPY portal.conf /etc/nginx/conf.d/portal.conf
+COPY intranet.conf /etc/nginx/conf.d/intranet.conf
+COPY webmail.conf /etc/nginx/conf.d/webmail.conf
