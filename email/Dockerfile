@@ -9,16 +9,13 @@ RUN apt install postfix dovecot-imapd dovecot-pop3d telnet -y
 
 RUN apt install syslog-ng -y
 
-COPY ./postfix/etc/main.cf /etc/postfix
+COPY ./postfix/main.cf /etc/postfix
 
-COPY ./postfix/etc/master.cf /etc/postfix # <-- Ver se a estrutura de diretorios está correta
+COPY ./postfix/master.cf /etc/postfix
 
 COPY ./dovecot/conf.d/* /etc/dovecot/conf.d
 
-
-COPY mailname /etc # <-- Nesse arquivo so tem uma linha indicando o dominio. Ex.: asa.br
-
-COPY ./postfix/main.cf /etc/postfix
+COPY mailname /etc
 
 #RUN apt install apache2 apache2-utils mariadb-server mariadb-client curl 
 #RUN libapache2-mod-php php php-mysql php-cli php-pear php-gmp php-gd php-bcmath
