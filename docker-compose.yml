@@ -24,16 +24,25 @@ services:
     image: intranet
     container_name: intranet
     networks:
-      - asa-network
+      - asa-network  
   email:
     build:
       context: ./email
       dockerfile: Dockerfile
     image: email
     container_name: email
+    ports:
+      - "25:25"
+      - "587:587"
+    volumes:
+      - ./srv/postfix/conf:/etc/postfix
+      - ./srv/postfix/domainkeys:/etc/opendkim/domainkeys
+    environment:
+      - maildomain=mail.pa.br
+      - smtp_user=user:pwd
+    restart: always
     networks:
       - asa-network
-
   proxy:
     build:
       context: ./proxy

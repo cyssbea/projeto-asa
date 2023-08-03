@@ -1,0 +1,59 @@
+FROM debian:latest
+
+
+
+
+RUN apt update -y
+
+
+
+
+RUN apt upgrade -y
+
+
+
+
+RUN apt install postfix dovecot-imapd dovecot-pop3d telnet -y
+
+
+
+
+
+
+
+COPY ./postfix/etc/main.cf /etc/postfix
+
+
+
+
+COPY ./postfix/etc/master.cf /etc/postfix # <-- Ver se a estrutura de diretorios está correta
+
+
+
+
+COPY ./dovecot/conf.d/* /etc/dovecot/conf.d
+
+
+
+
+RUN apt install syslog-ng -y
+
+
+
+
+COPY mailname /etc # <-- Nesse arquivo so tem uma linha indicando o dominio. Ex.: asa.br
+
+
+
+
+# Expose Ports
+
+EXPOSE
+25/tcp 587/tcp
+110/tcp 143/tcp
+
+
+
+
+CMD 
+["sh", "-c", "service syslog-ng start ; service postfix start ; service dovecot start ; tail -F /var/log/mail.log"]

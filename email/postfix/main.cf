@@ -47,6 +47,7 @@ inet_protocols = all
 virtual_mailbox_domains = mysql:/etc/postfix/mariadb-vdomains.cf
 virtual_mailbox_maps = mysql:/etc/postfix/mariadb-vusers.cf
 virtual_alias_maps = mysql:/etc/postfix/mariadb-valias.cf
+virtual_transport = lmtp:unix:private/dovecot-lmtp
 
 # ENABLE TLS #
 smtpd_use_tls = yes
@@ -60,6 +61,9 @@ tls_random_source = dev:/dev/urandom
 # END TLS   #                                     
                 
 # SASL conf #
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
 
 conf.d/master.conf:
 autentication service {
