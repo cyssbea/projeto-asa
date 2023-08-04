@@ -34,5 +34,5 @@ EXPOSE 143/tcp
 
 #CMD ["/etc/init.d/startemail.sh"]
 #Start the Postfix Service
-#CMD ["/usr/sbin/postfix", "start-fg"]
+CMD ["/usr/sbin/postfix", "start-fg"]
 CMD ["sh", "-c", "service syslog-ng start ; service postfix start ; service dovecot start ; tail -F /var/log/mail.log"]
